@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>C Pool Tutor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="course-header">
+        <div>
+          <p class="eyebrow">C Pool Tutor</p>
+          <h1 data-edit-key="course-title">Тренажер по C для бассейна</h1>
+        </div>
+
+        <div class="menu-wrap">
+          <button class="menu-button" type="button" id="menu-button" aria-expanded="false" aria-controls="course-menu" aria-label="Открыть оглавление">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav class="course-menu" id="course-menu" aria-label="Оглавление">
+            <button class="menu-item" type="button" data-target-page="0" data-edit-key="menu-intro">0. Введение</button>
+            <button class="menu-item" type="button" data-target-page="1" data-edit-key="menu-hello">1. Hello, AI!</button>
+            <button class="menu-item" type="button" data-target-page="2" data-edit-key="menu-comments">2. Комментарии</button>
+            <button class="menu-item" type="button" data-target-page="3" data-edit-key="menu-input-3">3. Ввод числа</button>
+            <button class="menu-item" type="button" data-target-page="4" data-edit-key="menu-arithmetic-4">4. Арифметика</button>
+            <button class="menu-item" type="button" data-target-page="5" data-edit-key="menu-errors-5">5. Условия и n/a</button>
+            <button class="menu-item" type="button" data-target-page="6" data-edit-key="menu-functions-6">6. Функции</button>
+          </nav>
+        </div>
+      </header>
+
+      <section class="page-strip" aria-live="polite">
+        <article class="course-page is-active" data-page="0">
+          <div class="intro-page">
+            <section class="intro-card">
+              <p class="eyebrow" data-edit-key="intro-eyebrow">Введение</p>
+              <h2 data-edit-key="intro-title">Почему курс начинается с C</h2>
+              <p data-edit-key="intro-approach">В первом C-проекте язык представлен как инструмент, выросший рядом с UNIX: C создал Деннис Ритчи в Bell Labs в 1973 году, и затем язык перенесли на множество платформ. Для бассейна это хороший старт: C быстро показывает, что программа состоит из функций, инструкций, переменных, ввода, вывода и строгого порядка действий.</p>
+              <p data-edit-key="intro-c-program">C называют процедурным и структурным языком. Это значит, что задачу приходится раскладывать на понятные шаги: где начинается программа, какие данные она получает, что вычисляет и что печатает. Здесь мало скрытой магии: пропущенная точка с запятой, неверный формат вывода или непроверенный ввод сразу становятся видимой ошибкой.</p>
+              <p data-edit-key="intro-flow">Если ты раньше не программировала, бассейн может ощущаться тяжелым. Формат специально построен на самостоятельном поиске, проверке источников, peer-to-peer и разборе до понимания. Но когда новых слов и правил слишком много, нормально сначала закрепить базу здесь, а потом идти к пирам уже с конкретным вопросом.</p>
+            </section>
+
+            <section class="intro-card">
+              <p class="eyebrow" data-edit-key="values-eyebrow">Задание</p>
+              <h2 data-edit-key="values-question">Выбери, какие ценности стоят за Школой 21</h2>
+              <div class="values-task" id="values-task">
+                <button class="value-action-button" type="button" id="values-action">показать ответ</button>
+                <div class="values-list" id="values-options">
+                  <button class="value-option" type="button" data-value="independent" data-correct="true" data-edit-key="value-independent">самостоятельность</button>
+                  <button class="value-option" type="button" data-value="p2p" data-correct="true" data-edit-key="value-p2p">равный равному</button>
+                  <button class="value-option" type="button" data-value="practice" data-correct="true" data-edit-key="value-practice">практические проекты</button>
+                  <button class="value-option" type="button" data-value="honesty" data-correct="true" data-edit-key="value-honesty">честность</button>
+                  <button class="value-option" type="button" data-value="lectures" data-correct="false" data-edit-key="value-lectures">лекции как главный формат</button>
+                  <button class="value-option" type="button" data-value="copying" data-correct="false" data-edit-key="value-copying">быстро списать решение</button>
+                  <button class="value-option" type="button" data-value="marks" data-correct="false" data-edit-key="value-marks">учиться ради оценки</button>
+                  <button class="value-option" type="button" data-value="teacher" data-correct="false" data-edit-key="value-teacher">ждать объяснения от преподавателя</button>
+                </div>
+                <div class="value-feedback is-hidden" id="value-feedback"></div>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <article class="course-page" data-page="1">
+          <div class="lesson-layout">
+            <aside class="lesson-sidebar" aria-label="План первого урока">
+              <h2 data-edit-key="hello-sidebar-title">Первая тема</h2>
+              <ol class="step-list">
+                <li data-edit-key="hello-step-1">Понять каркас C-программы</li>
+                <li data-edit-key="hello-step-2">Разобрать каждую часть кода</li>
+                <li data-edit-key="hello-step-3">Пройти отработку и открыть следующую тему</li>
+              </ol>
+              <section class="read-code-task" aria-labelledby="read-code-title">
+                <h3 id="read-code-title" class="task-heading" data-edit-key="read-code-task-title">Нажми на каждую часть кода и прочитай подсказку.</h3>
+                <div class="code-window code-window-compact" aria-label="Код с кликабельными элементами">
+                  <div class="code-topbar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <pre><code><button class="token" type="button" data-title="#include" data-body="Эта строка относится к препроцессору: до компиляции он подставляет сведения из заголовочного файла. Для printf нужен заголовок stdio.h.">#include</button> <button class="token" type="button" data-title="&lt;stdio.h&gt;" data-body="stdio.h — заголовок стандартной библиотеки ввода-вывода. Он сообщает компилятору, как вызывать printf.">&lt;stdio.h&gt;</button>
+
+<button class="token" type="button" data-title="int" data-body="int перед main означает, что функция вернет целое число. Обычно 0 сообщает системе, что программа завершилась успешно.">int</button> <button class="token" type="button" data-title="main" data-body="main — имя функции, с которой начинается выполнение C-программы. Без main обычная программа не знает, откуда стартовать.">main</button>(<button class="token" type="button" data-title="void" data-body="void в скобках говорит, что main не принимает входные аргументы. Это явная запись для программы без параметров запуска.">void</button>) <button class="token" type="button" data-title="{" data-body="Открывающая фигурная скобка начинает тело функции: внутри лежат команды, которые выполняются по порядку.">{</button>
+    <button class="token" type="button" data-title="printf" data-body="printf — функция из stdio.h. Она выводит на экран строку, которую получает в круглых скобках.">printf</button>(<button class="token" type="button" data-title="&quot;Hello, AI!&quot;" data-body="Текст в двойных кавычках — строковая константа. printf напечатает именно эти символы.">&quot;Hello, AI!&quot;</button>);
+    <button class="token" type="button" data-title="return" data-body="return завершает функцию и возвращает значение наружу. В main это значение получает операционная система.">return</button> <button class="token" type="button" data-title="0" data-body="0 после return — код успешного завершения. Так мы заранее закладываем, что при нормальном пути ошибки нет.">0</button>;
+<button class="token" type="button" data-title="}" data-body="Закрывающая фигурная скобка заканчивает тело main. После нее команд этой функции больше нет.">}</button></code></pre>
+                  <div class="tip" id="code-tip" aria-live="polite">
+                    <div class="tip-title">Нажми на элемент кода</div>
+                    <div class="tip-body">Здесь появится короткое объяснение выбранной части.</div>
+                  </div>
+                </div>
+              </section>
+            </aside>
+
+            <div class="lesson-main">
+              <section class="fill-code-task" aria-labelledby="fill-code-title">
+                <h2 id="fill-code-title" class="task-heading" data-edit-key="fill-code-title">Восстанови код программы.</h2>
+                <div class="code-window" aria-label="Код с пропусками">
+                <div class="code-topbar">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <pre><code><select class="code-select" aria-label="Директива подключения" data-correct="#include" style="--blank-width: 8ch;">
+  <option value=""></option>
+  <option value="#include">#include</option>
+  <option value="printf">printf</option>
+  <option value="return">return</option>
+  <option value="main">main</option>
+</select> &lt;stdio.h&gt;
+
+int <select class="code-select" aria-label="Стартовая функция" data-correct="main" style="--blank-width: 7ch;">
+  <option value=""></option>
+  <option value="main">main</option>
+  <option value="void">void</option>
+  <option value="printf">printf</option>
+  <option value="stdio.h">stdio.h</option>
+</select>(void) {
+    <select class="code-select" aria-label="Функция вывода" data-correct="printf" style="--blank-width: 7ch;">
+  <option value=""></option>
+  <option value="printf">printf</option>
+  <option value="main">main</option>
+  <option value="return">return</option>
+  <option value="int">int</option>
+</select>("Hello, AI!");
+    <select class="code-select" aria-label="Возврат результата" data-correct="return" style="--blank-width: 8ch;">
+  <option value=""></option>
+  <option value="return">return</option>
+  <option value="printf">printf</option>
+  <option value="#include">#include</option>
+  <option value="void">void</option>
+</select> 0;
+}</code></pre>
+                </div>
+              </section>
+
+              <section class="practice-card" aria-labelledby="practice-title">
+                <h2 id="practice-title" class="task-heading" data-edit-key="practice-title">Ответь на вопросы, чтобы проверить понимание.</h2>
+                <div class="practice-list">
+                  <div class="practice-question is-active" data-question="0">
+                    <p data-edit-key="q-include-title">Что делает <code>#include &lt;stdio.h&gt;</code>?</p>
+                    <button type="button" data-answer="wrong" data-edit-key="q-include-wrong">Запускает программу</button>
+                    <button type="button" data-answer="right" data-edit-key="q-include-right">Подключает сведения о вводе-выводе</button>
+                  </div>
+                  <div class="practice-question" data-question="1">
+                    <p data-edit-key="q-main-title">С какой функции начинается выполнение C-программы?</p>
+                    <button type="button" data-answer="right" data-edit-key="q-main-right">main</button>
+                    <button type="button" data-answer="wrong" data-edit-key="q-main-wrong">printf</button>
+                  </div>
+                  <div class="practice-question" data-question="2">
+                    <p data-edit-key="q-return-title">Почему в конце стоит <code>return 0;</code>?</p>
+                    <button type="button" data-answer="wrong" data-edit-key="q-return-wrong">Чтобы напечатать ноль</button>
+                    <button type="button" data-answer="right" data-edit-key="q-return-right">Чтобы вернуть код успешного завершения</button>
+                  </div>
+                </div>
+                <div class="practice-dots" id="practice-status" aria-label="Ход отработки"></div>
+              </section>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-page" data-page="2">
+          <div class="comments-page">
+            <section class="comments-card">
+              <p class="eyebrow" data-edit-key="comments-eyebrow">Тема 2</p>
+              <h2 data-edit-key="comments-title">Комментарии к коду</h2>
+              <p data-edit-key="comments-intro">Комментарий — это текст для человека. Компилятор его игнорирует, поэтому комментарии не выполняются и не меняют результат программы. Они помогают оставить рядом с кодом короткое объяснение: что делает строка, почему решение выбрано именно так или где важно не забыть о риске.</p>
+              <div class="comment-type-grid">
+                <div class="comment-type">
+                  <p data-edit-key="comments-line-text">Однострочный комментарий начинается с символов двойной косой черты <code>//</code> и продолжается до конца строки. Удобен для короткой заметки рядом с командой.</p>
+                  <div class="code-window" aria-label="Пример однострочного комментария">
+                    <div class="code-topbar">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <strong class="code-window-title" data-edit-key="comments-line-title">Однострочный комментарий //</strong>
+                    </div>
+                    <pre><code>printf("Hello, AI!"); <span class="comment">// выводим текст на экран</span></code></pre>
+                  </div>
+                </div>
+                <div class="comment-type">
+                  <p data-edit-key="comments-block-text">Блочный комментарий начинается с символов косая черта и звездочка <code>/*</code>, а заканчивается символами звездочка и косая черта <code>*/</code>. Может занимать одну или несколько строк.</p>
+                  <div class="code-window" aria-label="Пример блочного комментария">
+                    <div class="code-topbar">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <strong class="code-window-title" data-edit-key="comments-block-title">Блочный комментарий /* */</strong>
+                    </div>
+                    <pre><code><span class="comment">/*
+  main возвращает 0,
+  если программа дошла до конца без ошибки.
+*/</span>
+return 0;</code></pre>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="comments-card ai-comment-card">
+              <button class="comment-ai-action" type="button" id="comment-ai-action">увидеть ответ</button>
+              <h2 class="task-heading" data-edit-key="ai-comment-task">Напиши комментарий к строке кода.</h2>
+              <div class="code-window" aria-label="Поле для комментария">
+                <div class="code-topbar">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt; <span class="inline-comment-input is-empty" role="textbox" contenteditable="true" aria-label="Комментарий к строке include" data-kind="include" data-placeholder="// напиши, за что отвечает эта строка"></span>
+
+int main(void) { <span class="inline-comment-input is-empty" role="textbox" contenteditable="true" aria-label="Комментарий к строке main" data-kind="main" data-placeholder="// напиши, за что отвечает эта строка"></span>
+    printf("Hello, AI!"); <span class="inline-comment-input is-empty" role="textbox" contenteditable="true" aria-label="Комментарий к строке printf" data-kind="printf" data-placeholder="// напиши, за что отвечает эта строка"></span>
+    return 0; <span class="inline-comment-input is-empty" role="textbox" contenteditable="true" aria-label="Комментарий к строке return" data-kind="return" data-placeholder="// напиши, за что отвечает эта строка"></span>
+} <span class="inline-comment-input is-empty" role="textbox" contenteditable="true" aria-label="Комментарий к закрывающей скобке" data-kind="close" data-placeholder="// напиши, за что отвечает эта строка"></span></code></pre>
+              </div>
+              <div class="ai-dialog" aria-live="polite">
+                <div class="ai-message ai-message-assistant">
+                  <strong>AI</strong>
+                  <p id="ai-comment-feedback" data-edit-key="ai-comment-placeholder">Здесь появится обратная связь: пройдено или нужно уточнить смысл комментария.</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="comments-card">
+              <h2 data-edit-key="comments-real-title">Когда комментарии действительно помогают</h2>
+              <p data-edit-key="comments-real-1">Хороший комментарий не пересказывает очевидное. Если строка уже понятна из самого кода, комментарий лучше не писать. Например, <code>return 0;</code> не нужно объяснять как “возвращаем ноль”, полезнее указать, что это код успешного завершения программы.</p>
+              <p data-edit-key="comments-real-2">Комментарии особенно полезны там, где есть причина, ограничение или договоренность: почему выбран такой формат вывода, почему проверка стоит до вычисления, почему нельзя делить на ноль, почему функция не принимает аргументы.</p>
+              <p data-edit-key="comments-real-3">В учебных задачах комментарии помогают проговорить понимание. Но в сдаваемом коде Школы 21 важнее ясная структура, короткие функции и отсутствие мусора. Комментарий должен поддерживать код, а не прятать непонимание.</p>
+            </section>
+
+            <section class="comments-card comment-quiz-card">
+              <div class="comment-quiz-progress" id="comment-quiz-progress" aria-label="Ход вопросов"></div>
+              <h2 class="task-heading" data-edit-key="comments-quiz-title">Ответь на вопросы, чтобы проверить понимание.</h2>
+              <div class="comment-quiz">
+                <div class="comment-question is-active">
+                  <p data-edit-key="comments-q1">Какой комментарий продолжается только до конца строки?</p>
+                  <button type="button" data-answer="right" data-edit-key="comments-q1-right">// комментарий</button>
+                  <button type="button" data-answer="wrong" data-edit-key="comments-q1-wrong">/* комментарий */</button>
+                </div>
+                <div class="comment-question">
+                  <p data-edit-key="comments-q2">Что компилятор делает с комментариями?</p>
+                  <button type="button" data-answer="wrong" data-edit-key="comments-q2-wrong">Выполняет как команды</button>
+                  <button type="button" data-answer="right" data-edit-key="comments-q2-right">Игнорирует при выполнении программы</button>
+                </div>
+                <div class="comment-question">
+                  <p data-edit-key="comments-q3">Какой комментарий полезнее?</p>
+                  <button type="button" data-answer="wrong" data-edit-key="comments-q3-wrong">return 0; // возвращаем 0</button>
+                  <button type="button" data-answer="right" data-edit-key="comments-q3-right">return 0; // сообщаем системе об успешном завершении</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <article class="course-page placeholder-page" data-page="3">
+          <div class="placeholder-card">
+            <p class="eyebrow" data-edit-key="input-eyebrow-3">Тема 3</p>
+            <h2 data-edit-key="input-title">Ввод числа</h2>
+            <p data-edit-key="input-text">Здесь будет урок про <code>scanf</code>, целые числа и проверку ввода. Он начнется с повторения <code>main</code>, <code>stdio.h</code> и точного формата вывода из первой темы.</p>
+            <p class="future-check" data-edit-key="input-check">Будущая проверка: прочитать число и вывести <code>Hello, 123!</code> без лишнего переноса строки.</p>
+            <button class="unlock-next" type="button" data-unlock-to="4" data-edit-key="temp-practice-1">Пройти временную отработку</button>
+          </div>
+        </article>
+
+        <article class="course-page placeholder-page" data-page="4">
+          <div class="placeholder-card">
+            <p class="eyebrow" data-edit-key="arithmetic-eyebrow-4">Тема 4</p>
+            <h2 data-edit-key="arithmetic-title">Арифметика</h2>
+            <p data-edit-key="arithmetic-text">Здесь будет урок про сумму, разность, произведение, деление и обработку деления на ноль. В начале темы будет встроенная проверка того, что ввод числа уже понятен.</p>
+            <p class="future-check" data-edit-key="arithmetic-check">Будущая проверка: программа получит два числа, а ученик должен заранее заметить риск деления на ноль.</p>
+            <button class="unlock-next" type="button" data-unlock-to="5" data-edit-key="temp-practice-2">Пройти временную отработку</button>
+          </div>
+        </article>
+
+        <article class="course-page placeholder-page" data-page="5">
+          <div class="placeholder-card">
+            <p class="eyebrow" data-edit-key="errors-eyebrow-5">Тема 5</p>
+            <h2 data-edit-key="errors-title">Условия и n/a</h2>
+            <p data-edit-key="errors-text">Здесь появятся проверки ошибок: некорректный ввод, деление на ноль, ветвление и строгий вывод <code>n/a</code>.</p>
+            <p class="future-check" data-edit-key="errors-check">Будущая проверка: выбрать, где нужен <code>if</code>, а где достаточно обычной последовательности команд.</p>
+            <button class="unlock-next" type="button" data-unlock-to="6" data-edit-key="temp-practice-3">Пройти временную отработку</button>
+          </div>
+        </article>
+
+        <article class="course-page placeholder-page" data-page="6">
+          <div class="placeholder-card">
+            <p class="eyebrow" data-edit-key="functions-eyebrow-6">Тема 6</p>
+            <h2 data-edit-key="functions-title">Функции</h2>
+            <p data-edit-key="functions-text">Здесь будет разбор маленьких функций: зачем их выделять, что такое параметры, возвращаемое значение и как не смешивать ввод-вывод с вычислениями.</p>
+          </div>
+        </article>
+      </section>
+
+      <footer class="pager">
+        <button class="pager-button pager-arrow" type="button" id="prev-page" aria-label="Предыдущая страница">←</button>
+        <div class="page-indicator" id="page-indicator">0 / 5</div>
+        <button class="unlock-next intro-start-pager" type="button" id="intro-start-page" data-unlock-to="1" data-edit-key="start-first-topic">Начать курс</button>
+        <button class="pager-button pager-arrow" type="button" id="next-page" aria-label="Следующая страница">→</button>
+      </footer>
+    </main>
+    <script src="firebase-config.js"></script>
+    <script src="firebase-db.js" type="module"></script>
+    <script src="lesson.js"></script>
+  </body>
+</html>
