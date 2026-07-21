@@ -44,7 +44,7 @@ a {
   align-items: start;
   justify-content: space-between;
   gap: 20px;
-  width: min(920px, 100%);
+  width: min(860px, 100%);
   margin-right: auto;
   margin-bottom: 18px;
   margin-left: auto;
@@ -166,7 +166,7 @@ h3 {
   grid-template-columns: 1fr;
   gap: 16px;
   align-items: start;
-  max-width: 920px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
@@ -202,7 +202,7 @@ h3 {
 .comments-page {
   display: grid;
   gap: 16px;
-  max-width: 920px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
