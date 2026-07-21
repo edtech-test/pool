@@ -18,7 +18,14 @@ const tokens = Array.from(root.querySelectorAll(".token"));
 const codeWindow = root.querySelector(".code-window");
 const practiceStatus = root.querySelector("#practice-status");
 const practiceQuestions = Array.from(root.querySelectorAll(".practice-question"));
+const reinforcementProgress = root.querySelector("#reinforcement-progress");
+const reinforcementQuestions = Array.from(root.querySelectorAll(".reinforcement-question"));
 const codeSelects = Array.from(root.querySelectorAll(".code-select"));
+const codeBlanks = Array.from(root.querySelectorAll(".code-blank"));
+const blankQuestion = root.querySelector("#blank-question");
+const blankAnswer = root.querySelector("#blank-answer");
+const blankCheck = root.querySelector("#blank-check");
+const blankFeedback = root.querySelector("#blank-feedback");
 const unlockButtons = Array.from(root.querySelectorAll(".unlock-next"));
 const valueOptions = Array.from(root.querySelectorAll(".value-option"));
 const valuesOptions = root.querySelector("#values-options");
@@ -34,7 +41,10 @@ const savedPage = Number(localStorage.getItem(PAGE_KEY) || "0");
 let currentPage = Number.isFinite(savedPage) ? Math.min(savedPage, unlockedPage, pages.length - 1) : 0;
 let currentPracticeQuestion = 0;
 let currentCommentQuestion = 0;
+let currentReinforcementQuestion = 0;
 let commentWasEdited = false;
+let blankQuestionIndex = 0;
+let blankQuestionOrder = [];
 
 const valueExplanations = {
   independent: "В проектах прямо сказано, что информацию нужно добывать самостоятельно, проверять и сравнивать источники.",
@@ -48,6 +58,7 @@ const valueExplanations = {
 };
 
 function applyContentOverrides() {
+  if (!root.body.dataset.allowContentOverrides) return;
   const overrides = JSON.parse(localStorage.getItem(CONTENT_KEY) || "{}");
   root.querySelectorAll("[data-edit-key]").forEach((item) => {
     if (Object.prototype.hasOwnProperty.call(overrides, item.dataset.editKey)) {
@@ -143,6 +154,7 @@ function renderNavigation() {
 }
 
 function updatePractice() {
+  if (!practiceStatus || practiceQuestions.length === 0) return;
   const answered = practiceQuestions.filter((question) => question.classList.contains("is-answered")).length;
   practiceStatus.innerHTML = "";
   practiceQuestions.forEach((question, index) => {
@@ -157,6 +169,7 @@ function updatePractice() {
 }
 
 function showPracticeQuestion(index) {
+  if (practiceQuestions.length === 0) return;
   currentPracticeQuestion = Math.min(index, practiceQuestions.length - 1);
   practiceQuestions.forEach((question, questionIndex) => {
     question.classList.toggle("is-active", questionIndex === currentPracticeQuestion);
@@ -164,7 +177,32 @@ function showPracticeQuestion(index) {
   updatePractice();
 }
 
+function updateReinforcement() {
+  const answered = reinforcementQuestions.filter((question) => question.classList.contains("is-answered")).length;
+  if (reinforcementProgress) {
+    reinforcementProgress.innerHTML = "";
+    reinforcementQuestions.forEach((question, index) => {
+      const dot = document.createElement("span");
+      dot.className = "practice-dot";
+      dot.classList.toggle("is-current", index === currentReinforcementQuestion);
+      dot.classList.toggle("is-done", question.classList.contains("is-answered"));
+      reinforcementProgress.appendChild(dot);
+    });
+  }
+  if (answered === reinforcementQuestions.length && reinforcementQuestions.length > 0) saveUnlock(3);
+}
+
+function showReinforcementQuestion(index) {
+  if (reinforcementQuestions.length === 0) return;
+  currentReinforcementQuestion = Math.min(index, reinforcementQuestions.length - 1);
+  reinforcementQuestions.forEach((question, questionIndex) => {
+    question.classList.toggle("is-active", questionIndex === currentReinforcementQuestion);
+  });
+  updateReinforcement();
+}
+
 function updateCommentUnlock() {
+  if (commentQuestions.length === 0) return;
   const answered = commentQuestions.filter((question) => question.classList.contains("is-answered")).length;
   if (commentQuizProgress) {
     commentQuizProgress.innerHTML = "";
@@ -180,11 +218,70 @@ function updateCommentUnlock() {
 }
 
 function showCommentQuestion(index) {
+  if (commentQuestions.length === 0) return;
   currentCommentQuestion = Math.min(index, commentQuestions.length - 1);
   commentQuestions.forEach((question, questionIndex) => {
     question.classList.toggle("is-active", questionIndex === currentCommentQuestion);
   });
   updateCommentUnlock();
+}
+
+function updateFirstPageUnlock() {
+  const firstPageSelects = Array.from(root.querySelectorAll('.course-page[data-page="1"] .code-select'));
+  if (firstPageSelects.length === 0) return;
+  const allCorrect = firstPageSelects.every((select) => select.value && select.value === select.dataset.correct);
+  if (allCorrect) saveUnlock(2);
+}
+
+function shuffleItems(items) {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+function normalizeAnswer(value) {
+  return value.trim().toLowerCase();
+}
+
+function showBlankQuestion() {
+  if (!blankQuestion || !blankAnswer || !blankCheck || !blankFeedback || blankQuestionOrder.length === 0) return;
+  const blank = blankQuestionOrder[blankQuestionIndex];
+  if (!blank) {
+    blankQuestion.textContent = "Все пропуски заполнены.";
+    blankFeedback.textContent = "Готово, программа восстановлена.";
+    blankAnswer.value = "";
+    blankAnswer.disabled = true;
+    blankCheck.disabled = true;
+    return;
+  }
+
+  blankQuestion.textContent = blank.dataset.question;
+  blankFeedback.textContent = "";
+  blankAnswer.value = "";
+  blankAnswer.disabled = false;
+  blankCheck.disabled = false;
+  if (blankAnswer.closest(".course-page")?.classList.contains("is-active")) blankAnswer.focus();
+}
+
+function checkBlankAnswer() {
+  const blank = blankQuestionOrder[blankQuestionIndex];
+  if (!blank || !blankAnswer || !blankFeedback) return;
+  const answer = blankAnswer.value;
+  const isCorrect = normalizeAnswer(answer) === normalizeAnswer(blank.dataset.answer);
+
+  if (!isCorrect) {
+    blankFeedback.textContent = "Пока не то. Проверь смысл строки и попробуй еще раз.";
+    return;
+  }
+
+  blank.textContent = blank.dataset.answer;
+  blank.classList.add("is-filled");
+  blankFeedback.textContent = "Верно.";
+  blankQuestionIndex += 1;
+  window.setTimeout(showBlankQuestion, 450);
 }
 
 function recordValuesTask(resultText, correct) {
@@ -267,8 +364,21 @@ codeSelects.forEach((select) => {
     if (!select.value) return;
     select.classList.toggle("is-correct", select.value === select.dataset.correct);
     select.classList.toggle("is-wrong", select.value !== select.dataset.correct);
+    updateFirstPageUnlock();
   });
 });
+
+if (blankCheck) {
+  blankCheck.addEventListener("click", checkBlankAnswer);
+}
+
+if (blankAnswer) {
+  blankAnswer.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    checkBlankAnswer();
+  });
+}
 
 practiceQuestions.forEach((question) => {
   question.addEventListener("click", (event) => {
@@ -294,20 +404,39 @@ practiceQuestions.forEach((question) => {
   });
 });
 
+reinforcementQuestions.forEach((question) => {
+  question.addEventListener("click", (event) => {
+    const button = event.target.closest("button");
+    if (!button || question.classList.contains("is-answered")) return;
+    const buttons = Array.from(question.querySelectorAll("button"));
+    buttons.forEach((item) => item.classList.remove("is-correct", "is-wrong"));
+    question.classList.add("is-answered");
+    recordAnswer(question, button);
+    if (button.dataset.answer === "right") {
+      button.classList.add("is-correct");
+    } else {
+      button.classList.add("is-wrong");
+      const rightButton = buttons.find((item) => item.dataset.answer === "right");
+      if (rightButton) rightButton.classList.add("is-correct");
+    }
+    updateReinforcement();
+    window.setTimeout(() => {
+      const nextUnanswered = reinforcementQuestions.findIndex((item) => !item.classList.contains("is-answered"));
+      if (nextUnanswered !== -1) showReinforcementQuestion(nextUnanswered);
+    }, 850);
+  });
+});
+
 const commentAnswers = {
-  include: "// подключаем заголовок стандартного ввода-вывода для printf",
-  main: "// main — точка входа, отсюда начинается программа",
-  printf: "// выводим строку Hello, AI! на экран",
-  return: "// возвращаем 0 как код успешного завершения",
-  close: "// заканчиваем тело функции main"
+  program: "/* Программа выводит на экран текст Hello, AI!. */"
 };
 
 const commentChecks = {
-  include: (text) => (text.includes("stdio") || text.includes("заголов")) && (text.includes("printf") || text.includes("ввод") || text.includes("вывод")),
-  main: (text) => text.includes("main") || text.includes("начина") || text.includes("старт") || text.includes("точка вход"),
-  printf: (text) => text.includes("printf") || text.includes("печата") || text.includes("вывод") || text.includes("экран"),
-  return: (text) => text.includes("return") || text.includes("0") || text.includes("успеш") || text.includes("заверш"),
-  close: (text) => text.includes("закры") || text.includes("конец") || text.includes("тело") || text.includes("main")
+  program: (text) =>
+    text.includes("/*") &&
+    text.includes("*/") &&
+    (text.includes("hello") || text.includes("текст") || text.includes("строк")) &&
+    (text.includes("вывод") || text.includes("печата") || text.includes("экран"))
 };
 
 function setAiComments() {
@@ -327,7 +456,7 @@ function checkAiComment(forceAnswer = false) {
   if (forceAnswer) {
     setAiComments();
     syncAiCommentAction();
-    aiCommentFeedback.innerHTML = "<strong>Пройдено.</strong> Это пример ответа: каждый комментарий объясняет роль своей строки, а не просто пересказывает символы кода.";
+    aiCommentFeedback.innerHTML = "<strong>Пройдено.</strong> Это пример блочного комментария: он стоит перед программой и коротко описывает ее общий результат.";
     return;
   }
 
@@ -338,9 +467,9 @@ function checkAiComment(forceAnswer = false) {
   });
 
   if (missing.length === 0) {
-    aiCommentFeedback.innerHTML = "<strong>Пройдено.</strong> Все строки объяснены по смыслу: подключение библиотеки, вход в программу, вывод, успешное завершение и конец блока.";
+    aiCommentFeedback.innerHTML = "<strong>Пройдено.</strong> Комментарий оформлен как блочный и объясняет, что программа выводит текст на экран.";
   } else {
-    aiCommentFeedback.innerHTML = `<strong>Не пройдено.</strong> Нужно уточнить ${missing.length} комментариев. Проверь, что ты объясняешь роль строки, а не просто повторяешь код.`;
+    aiCommentFeedback.innerHTML = "<strong>Не пройдено.</strong> Проверь, что комментарий начинается с /*, заканчивается */, и по смыслу говорит, что программа выводит текст на экран.";
   }
 }
 
@@ -459,3 +588,6 @@ restoreCurrentPage();
 renderNavigation();
 showPracticeQuestion(0);
 showCommentQuestion(0);
+showReinforcementQuestion(0);
+blankQuestionOrder = shuffleItems(codeBlanks);
+showBlankQuestion();
