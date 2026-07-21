@@ -20,6 +20,7 @@ const practiceStatus = root.querySelector("#practice-status");
 const practiceQuestions = Array.from(root.querySelectorAll(".practice-question"));
 const reinforcementProgress = root.querySelector("#reinforcement-progress");
 const reinforcementQuestions = Array.from(root.querySelectorAll(".reinforcement-question"));
+const reinforcementComplete = root.querySelector("#reinforcement-complete");
 const codeSelects = Array.from(root.querySelectorAll(".code-select"));
 const codeBlanks = Array.from(root.querySelectorAll(".code-blank"));
 const blankQuestion = root.querySelector("#blank-question");
@@ -179,6 +180,7 @@ function showPracticeQuestion(index) {
 
 function updateReinforcement() {
   const answered = reinforcementQuestions.filter((question) => question.classList.contains("is-answered")).length;
+  const isComplete = answered === reinforcementQuestions.length && reinforcementQuestions.length > 0;
   if (reinforcementProgress) {
     reinforcementProgress.innerHTML = "";
     reinforcementQuestions.forEach((question, index) => {
@@ -189,7 +191,8 @@ function updateReinforcement() {
       reinforcementProgress.appendChild(dot);
     });
   }
-  if (answered === reinforcementQuestions.length && reinforcementQuestions.length > 0) saveUnlock(3);
+  if (reinforcementComplete) reinforcementComplete.classList.toggle("is-visible", isComplete);
+  if (isComplete) saveUnlock(2);
 }
 
 function showReinforcementQuestion(index) {

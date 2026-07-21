@@ -779,6 +779,17 @@ code {
   right: 24px;
 }
 
+.reinforcement-complete {
+  display: none;
+  margin: 4px 0 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.reinforcement-complete.is-visible {
+  display: block;
+}
+
 .practice-dot {
   width: 9px;
   height: 9px;

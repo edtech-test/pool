@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>C Pool Tutor</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260721-3" />
   </head>
   <body>
     <main class="app-shell">
@@ -36,7 +36,7 @@
               <h2 data-edit-key="intro-title">Почему курс начинается с C</h2>
               <p data-edit-key="intro-approach">В первом C-проекте язык представлен как инструмент, выросший рядом с UNIX: C создал Деннис Ритчи в Bell Labs в 1973 году, и затем язык перенесли на множество платформ. Для бассейна это хороший старт: C быстро показывает, что программа состоит из функций, инструкций, переменных, ввода, вывода и строгого порядка действий.</p>
               <p data-edit-key="intro-c-program">C называют процедурным и структурным языком. Это значит, что задачу приходится раскладывать на понятные шаги: где начинается программа, какие данные она получает, что вычисляет и что печатает. Здесь мало скрытой магии: пропущенная точка с запятой, неверный формат вывода или непроверенный ввод сразу становятся видимой ошибкой.</p>
-              <p data-edit-key="intro-flow">Если ты раньше не программировала, бассейн может ощущаться тяжелым. Формат специально построен на самостоятельном поиске, проверке источников, peer-to-peer и разборе до понимания. Но когда новых слов и правил слишком много, нормально сначала закрепить базу здесь, а потом идти к пирам уже с конкретным вопросом.</p>
+              <p data-edit-key="intro-flow">Если программирование пока в новинку, бассейн может ощущаться тяжелым. Формат специально построен на самостоятельном поиске, проверке источников, peer-to-peer и разборе до понимания. Но когда новых слов и правил слишком много, нормально сначала закрепить базу здесь, а потом идти к пирам уже с конкретным вопросом.</p>
             </section>
 
             <section class="intro-card">
@@ -215,7 +215,7 @@ int <span class="code-blank" data-blank="main" data-answer="main" data-question=
             </section>
 
             <section class="comments-card reinforcement-card" aria-labelledby="reinforcement-task-title">
-              <h2 id="reinforcement-task-title" class="task-heading" data-edit-key="reinforcement-task-title">Ответь на вопросы, чтобы проверить понимание.</h2>
+              <h2 id="reinforcement-task-title" class="task-heading" data-edit-key="reinforcement-task-title">Проверка понимания</h2>
               <div class="reinforcement-progress" id="reinforcement-progress" aria-label="Ход закрепления"></div>
               <div class="reinforcement-quiz">
                 <div class="reinforcement-question is-active">
@@ -249,6 +249,7 @@ int <span class="code-blank" data-blank="main" data-answer="main" data-question=
                   <button type="button" data-answer="right" data-edit-key="comments-q3-right">return 0; // сообщаем системе об успешном завершении</button>
                 </div>
               </div>
+              <p class="reinforcement-complete" id="reinforcement-complete">Готово, тема закреплена.</p>
             </section>
 
             <section class="comments-card terminal-next-card">
@@ -280,6 +281,6 @@ Hello, AI!              <span class="terminal-comment">— результат р
     </main>
     <script src="firebase-config.js"></script>
     <script src="firebase-db.js" type="module"></script>
-    <script src="lesson.js"></script>
+    <script src="lesson.js?v=20260721-3"></script>
   </body>
 </html>
